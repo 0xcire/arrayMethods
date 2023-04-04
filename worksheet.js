@@ -31,154 +31,218 @@ const characters = [
 
 //***MAP***
 //1. Get array of all names
-const names = characters.map((character) => {
-  return character.name;
-});
+function getNames(array) {
+  return array.map((value) => {
+    return value.name;
+  });
+}
+const names = getNames(characters);
 
 //2. Get array of all heights
-const heights = characters.map((character) => {
-  return character.height;
-});
+function getHeights(array) {
+  return array.map((value) => {
+    return value.height;
+  });
+}
+const heights = getHeights(characters);
 
 //3. Get array of objects with just name and height properties
-const nameAndHeights = characters.map((character) => {
-  return {
-    name: character.name,
-    height: character.height,
-  };
-});
+function getNameAndHeight(array) {
+  return array.map((value) => {
+    return {
+      name: value.name,
+      height: value.height,
+    };
+  });
+}
+const nameAndHeights = getNameAndHeight(characters);
 
 //4. Get array of all first names
-const firstNames = characters.map((character) => {
-  return character.name.split(" ")[0];
-});
-
-// console.log({
-//   names: names,
-//   heights: heights,
-//   nameAndHeights: nameAndHeights,
-//   firstNames: firstNames,
-// });
+function getFirstNames(array) {
+  return array.map((value) => {
+    return value.name.split(" ")[0];
+  });
+}
+const firstNames = getFirstNames(characters);
 
 //***REDUCE***
 //1. Get total mass of all characters
-const totalMass = characters.reduce((total, currentVal) => total + currentVal.mass, 0);
+function getTotalMass(array) {
+  return array.reduce((total, current) => {
+    return total + current.mass;
+  }, 0);
+}
+const totalMass = getTotalMass(characters);
 
 //2. Get total height of all characters
-const totalHeight = characters.reduce((total, current) => total + current.height, 0);
+function getTotalHeight(array) {
+  return array.reduce((total, current) => {
+    return total + current.height;
+  }, 0);
+}
+const totalHeight = getTotalHeight(characters);
 
 //3. Get total number of characters by eye color
 //  -- this was confusing honestly --
-const totalsByEyeColor = characters.reduce((acc, currentObj) => {
-  const key = currentObj["eye_color"];
-  const curGroup = acc[key] ?? [];
-  const matchingCharacterLength = [...curGroup, currentObj].length;
-  return { ...acc, [key]: [matchingCharacterLength] };
-}, {});
+function getTotalsByEyeColor(array) {
+  return array.reduce((acc, current) => {
+    const key = current["eye_color"];
+    const currentGroup = acc[key] ?? [];
+    const matchingCharacterLength = [...currentGroup, current].length;
+    return {
+      ...acc,
+      [key]: [matchingCharacterLength],
+    };
+  }, {});
+}
+const totalsByEyeColor = getTotalsByEyeColor(characters);
 
 //4. Get total number of characters in all the character names
-const totalChars = characters.reduce((total, current) => {
-  const currentName = current.name.split(" ");
-  const currentNameLength = currentName[0].length + currentName[1].length;
-  return total + currentNameLength;
-}, 0);
-
-// console.log({
-//   totalMass: totalMass,
-//   totalHeight: totalHeight,
-//   totalsByEyeColor: totalsByEyeColor,
-//   totalChars: totalChars,
-// });
+function getTotalCharsInNames(array) {
+  return array.reduce((total, current) => {
+    const currentName = current.name.split(" ");
+    const currentNameLength = currentName[0].length + currentName[1].length;
+    return total + currentNameLength;
+  }, 0);
+}
+const totalChars = getTotalCharsInNames(characters);
 
 //***FILTER***
 //1. Get characters with mass greater than 100
-const heavyCharacters = characters.filter((character) => character.mass > 100);
+function getHeavyCharacters(array) {
+  return array.filter((value) => {
+    return value.mass > 100;
+  });
+}
+const heavyCharacters = getHeavyCharacters(characters);
 
 //2. Get characters with height less than 200
-const shortCharacters = characters.filter((character) => character.height < 200);
+function getShortCharacters(array) {
+  return array.filter((value) => {
+    return value.height < 200;
+  });
+}
+const shortCharacters = getShortCharacters(characters);
 
 //3. Get all male characters
-const manyMen = characters.filter((character) => character.gender === "male");
-//4. Get all female characters
-const women = characters.filter((character) => character.gender === "female");
+function getMale(array) {
+  return array.filter((value) => {
+    return value.gender === "male";
+  });
+}
+const allMen = getMale(characters);
 
-// console.log({
-//   heavyCharacters: heavyCharacters,
-//   shortCharacters: shortCharacters,
-//   manyMen: manyMen,
-//   women: women,
-// });
+//4. Get all female characters
+function getWomen(array) {
+  return array.filter((value) => {
+    return value.gender === "female";
+  });
+}
+const allWomen = getWomen(characters);
 
 //***SORT***
 //1. Sort by mass
-const byMass = [...characters].sort((a, b) => a.mass - b.mass);
+function sortByMass(array) {
+  return array.sort((a, b) => {
+    return a.mass - b.mass;
+  });
+}
+const byMass = sortByMass([...characters]);
 
 //2. Sort by height
-const byHeight = [...characters].sort((a, b) => a.height - b.height);
+function sortByHeight(array) {
+  return array.sort((a, b) => {
+    return a.height - b.height;
+  });
+}
+const byHeight = sortByHeight([...characters]);
 
 //3. Sort by name
-const byName = [...characters].sort((a, b) => {
-  const nameA = a.name.toUpperCase();
-  const nameB = b.name.toUpperCase();
-  if (nameA < nameB) {
-    return -1;
-  } else if (nameA > nameB) {
-    return 1;
-  }
-  return 0;
-});
+function sortByName(array) {
+  return array.sort((a, b) => {
+    const nameA = a.name.toUpperCase();
+    const nameB = b.name.toUpperCase();
+    if (nameA < nameB) {
+      return -1;
+    } else if (nameA > nameB) {
+      return 1;
+    }
+    return 0;
+  });
+}
+const byName = sortByName([...characters]);
 
 //4. Sort by gender
-const byGender = [...characters].sort((a, b) => {
-  if (a.gender < b.gender) {
-    return -1;
-  }
-  return 1;
-});
-
-// console.log({
-//   byMass: byMass,
-//   byHeight: byHeight,
-//   byName: byName,
-//   byGender: byGender,
-// });
+function sortByGender(array) {
+  return array.sort((a, b) => {
+    return a.gender < b.gender ? -1 : 1;
+  });
+}
+const byGender = sortByGender([...characters]);
 
 //***EVERY***
 //1. Does every character have blue eyes?
-const allBlueEyes = characters.every((character) => character.eye_color === "blue");
+
+function isAllBlueEyed(array) {
+  return array.every((value) => {
+    return value.eye_color === "blue";
+  });
+}
+const allBlueEyes = isAllBlueEyed(characters);
 
 //2. Does every character have mass more than 40?
-const allHeavierThan40 = characters.every((character) => character.mass > 40);
+function isAllHeavierThan40(array) {
+  return array.every((value) => {
+    return value.mass > 40;
+  });
+}
+const allHeavierThan40 = isAllHeavierThan40(characters);
 
 //3. Is every character shorter than 200?
-const allShorterThan200 = characters.every((character) => character.height < 200);
+function isAllShorterThan200(array) {
+  return array.every((value) => {
+    return value.height < 200;
+  });
+}
+const allShorterThan200 = isAllShorterThan200(characters);
 
 //4. Is every character male?
-const allMen = characters.every((character) => character.gender === "male");
-
-// console.log({
-//   allBlueEyes: allBlueEyes,
-//   allHeavierThan40: allHeavierThan40,
-//   allShorterThan200: allShorterThan200,
-//   allMen: allMen,
-// });
+function isAllMale(array) {
+  return array.every((value) => {
+    return value.gender === "male";
+  });
+}
+const allMale = isAllMale(characters);
 
 //***SOME***
 //1. Is there at least one male character?
-const manExists = characters.some((character) => character.gender === "male");
+function doesManExist(array) {
+  return array.some((value) => {
+    return value.gender === "male";
+  });
+}
+const manExists = doesManExist(characters);
 
 //2. Is there at least one character with blue eyes?
-const hasBlueEyes = characters.some((character) => character.eye_color === "blue");
+function doesBlueEyesExist(array) {
+  return array.some((value) => {
+    return value.eye_color === "blue";
+  });
+}
+const hasBlueEyes = doesBlueEyesExist(characters);
 
 //3. Is there at least one character taller than 210?
-const tallerThan210 = characters.some((character) => character.height > 210);
+function isOneTallerThan210(array) {
+  return array.some((value) => {
+    return value.height > 210;
+  });
+}
+const tallerThan210 = isOneTallerThan210(characters);
 
 //4. Is there at least one character that has mass less than 50?
-const lighterThan50 = characters.some((character) => character.mass < 50);
-
-console.log({
-  manExists: manExists,
-  hasBlueEyes: hasBlueEyes,
-  tallerThan210: tallerThan210,
-  lighterThan50: lighterThan50,
-});
+function isOneLighterThan50(array) {
+  return array.some((value) => {
+    return value.mass < 50;
+  });
+}
+const lighterThan50 = isOneLighterThan50(characters);
